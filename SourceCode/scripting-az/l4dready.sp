@@ -1194,7 +1194,10 @@ public Action:Event_RoundEnd(Handle:event, const String:name[], bool:dontBroadca
 
 public Action:Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
 {
-	directorStop();
+	if (!isSecondRound || (GetConVarInt(cvarReadyUpStyle) && GetConVarInt(cvarReadyHalves)))
+	{
+		directorStop();
+	}
 
 	ClearArray(arrayclientswitchteam);
 
@@ -1249,7 +1252,7 @@ public Action PluginStart(Handle timer)
 	}
 	
 	if(cvarEnforceReady.BoolValue && 
-		(!isSecondRound || GetConVarInt(cvarReadyHalves) || pauseBetweenHalves || GetConVarInt(cvarReadyUpStyle))) 
+		(!isSecondRound || pauseBetweenHalves || (GetConVarInt(cvarReadyUpStyle) && GetConVarInt(cvarReadyHalves)))) 
 	{
 		compReady(0, 0);
 		pauseBetweenHalves = 0;
