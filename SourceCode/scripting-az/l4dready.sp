@@ -326,7 +326,7 @@ public OnPluginStart()
 	cvarEnforceReady = CreateConVar("l4d_ready_enabled", "0", "Make players ready up before a match begins", FCVAR_SPONLY | FCVAR_NOTIFY);
 	g_hGameTimeBlock = CreateConVar("l4d_teamswitch_during_game_seconds_block", "60", "Player can switch team until players have left start safe area for at least x seconds (0=off).", FCVAR_NOTIFY, true, 0.0);
 	cvarReadyCompetition = CreateConVar("l4d_ready_competition", "0", "Disable all plugins but a few competition-allowed ones", FCVAR_SPONLY | FCVAR_NOTIFY);
-	cvarReadyHalves = CreateConVar("l4d_ready_both_halves", "0", "Make players ready up both during the first and second rounds of a map", FCVAR_SPONLY | FCVAR_NOTIFY);
+	cvarReadyHalves = CreateConVar("l4d_ready_both_halves", "1", "Make players ready up both during the first and second rounds of a map", FCVAR_SPONLY | FCVAR_NOTIFY);
 	cvarReadyServerCfg = CreateConVar("l4d_ready_server_cfg", "", "Config to execute when the map is changed (to exec after server.cfg).", FCVAR_SPONLY | FCVAR_NOTIFY);
 	cvarReadyLeagueNotice = CreateConVar("l4d_ready_league_notice", "", "League notice displayed on RUP panel", FCVAR_SPONLY | FCVAR_NOTIFY);
 	cvarReadyLiveCountdown = CreateConVar("l4d_ready_live_countdown", "0", "Countdown timer to begin the round", FCVAR_SPONLY | FCVAR_NOTIFY);
