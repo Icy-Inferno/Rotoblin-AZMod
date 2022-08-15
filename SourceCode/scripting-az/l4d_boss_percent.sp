@@ -6,6 +6,9 @@
 #undef REQUIRE_PLUGIN
 native Is_Ready_Plugin_On();
 
+// Force %0 to be between %1 and %2.
+#define CLAMP(%0,%1,%2) (((%0) > (%2)) ? (%2) : (((%0) < (%1)) ? (%1) : (%0)))
+
 public Plugin:myinfo =
 {
 	name = "L4D1 Boss Flow Announce (Back to roots edition)",
@@ -19,6 +22,7 @@ new iWitchPercent = 0;
 new iTankPercent = 0;
 new Float:WitchPercentFloat = 0.0;
 
+new Handle:g_hVsBossBuffer;
 new Handle:hCvarPrintToEveryone;
 new Handle:hCvarTankPercent;
 new Handle:hCvarWitchPercent;
@@ -48,6 +52,8 @@ public Native_GetWitchPercent(Handle:plugin, numParams) {
 public OnPluginStart()
 {
 	LoadTranslations("Roto2-AZ_mod.phrases");
+
+	g_hVsBossBuffer = FindConVar("versus_boss_buffer");
 
 	hCvarPrintToEveryone = CreateConVar("l4d_global_percent", "0", "Display boss percentages to entire team when using commands", FCVAR_NOTIFY);
 	hCvarTankPercent = CreateConVar("l4d_tank_percent", "1", "Display Tank flow percentage in chat", FCVAR_NOTIFY);
@@ -174,12 +180,14 @@ public Action:BossCmd(client, args)
 
 stock Float:GetTankFlow(round)
 {
-	new Float:tankflow = L4D2Direct_GetVSTankFlowPercent(round); 
+	new Float:tankflow = CLAMP(L4D2Direct_GetVSTankFlowPercent(round) - (GetConVarFloat(g_hVsBossBuffer) / L4D2Direct_GetMapMaxFlowDistance()), 0.0, 1.0);
+	//new Float:tankflow = L4D2Direct_GetVSTankFlowPercent(round); 
 	return tankflow;
 }
 
 stock Float:GetWitchFlow(round)
 {
-	new Float:witchflow = L4D2Direct_GetVSWitchFlowPercent(round);
+	new Float:witchflow = CLAMP(L4D2Direct_GetVSWitchFlowPercent(round) - (GetConVarFloat(g_hVsBossBuffer) / L4D2Direct_GetMapMaxFlowDistance()), 0.0, 1.0);
+	//new Float:witchflow = L4D2Direct_GetVSWitchFlowPercent(round);
 	return witchflow;
 }

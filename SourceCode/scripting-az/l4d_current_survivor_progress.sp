@@ -71,7 +71,7 @@ public Action:CurrentCmd(client, args)
 
 stock Float:GetBossProximity()
 {
-	new Float:proximity = GetMaxSurvivorCompletion() + (GetConVarFloat(g_hVsBossBuffer) / L4D2Direct_GetMapMaxFlowDistance());
+	new Float:proximity = GetMaxSurvivorCompletion();
 	return proximity;
 }
 
