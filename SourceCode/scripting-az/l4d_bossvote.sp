@@ -8,6 +8,7 @@ Menu hVote = null;
 
 new Float:fTankFlow;
 new Float:fWitchFlow;
+new Handle:g_hVsBossBuffer;
 
 new String:tank[8];
 new String:witch[8];
@@ -34,6 +35,7 @@ public OnPluginStart()
 {
 	LoadTranslations("Roto2-AZ_mod.phrases");
 	RegConsoleCmd("sm_voteboss", Vote);
+	g_hVsBossBuffer = FindConVar("versus_boss_buffer");
 }
 
 public OnMapStart()
@@ -59,9 +61,9 @@ public Action:Vote(client, args)
 		if (args == 2)
 		{
 			GetCmdArg(1, tank, sizeof(tank));
-			fTankFlow = StringToFloat(tank) / 100.0;
+			fTankFlow = StringToFloat(tank) / 100.0 + GetConVarFloat(g_hVsBossBuffer) / L4D2Direct_GetMapMaxFlowDistance();
 			GetCmdArg(2, witch, sizeof(witch));
-			fWitchFlow = StringToFloat(witch) / 100.0;
+			fWitchFlow = StringToFloat(witch) / 100.0 + GetConVarFloat(g_hVsBossBuffer) / L4D2Direct_GetMapMaxFlowDistance();
 		}
 		else
 		{
